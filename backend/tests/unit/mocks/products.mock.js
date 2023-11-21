@@ -3,6 +3,11 @@ const productsFromModel = [
   { id: 2, name: 'name' },
 ];
 
+const productsFromDB = [
+  { id: 1, name: 'name' },
+  { id: 2, name: 'name' },
+];
+
 const productsRecoveredFromService = {
   status: 'SUCCESSFULL',
   data: productsFromModel,
@@ -10,5 +15,6 @@ const productsRecoveredFromService = {
 
 module.exports = {
   productsFromModel,
+  productsFromDB,
   productsRecoveredFromService,
 };
