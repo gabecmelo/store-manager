@@ -17,9 +17,13 @@
     "test:coverage": "npm run test:coverage --prefix backend",
     "test:mutation": "npm run test:mutation --prefix backend",
     "lint": "npm run lint --prefix __tests__ && npm run lint --prefix backend",
+    "fix": "npm run --fix lint --prefix __tests__ && npm run lint --prefix backend",
     "migration": "node -e \"require('./__tests__/cypress/utils/db').runMigration()\"",
     "seed": "node -e \"require('./__tests__/cypress/utils/db').runSeed()\"",
     "db:reset": "npm run migration && npm run seed",
     "postinstall": "npm install --prefix __tests__ && npm install --prefix backend"
+  },
+  "dependencies": {
+    "camelize": "^1.0.1"
   }
 }
