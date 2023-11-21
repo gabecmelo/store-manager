@@ -3,4 +3,6 @@ const { productsController } = require('../controllers');
 
 productsRoutes.get('/', productsController.getAllProducts);
 
+productsRoutes.get('/:id', productsController.getProductById);
+
 module.exports = productsRoutes;

@@ -11,7 +11,7 @@ const {
 const { expect } = chai;
 chai.use(require('sinon-chai'));
 
-describe('Realizando testes - PRODUCT CONTROLLER:', function () {
+describe('Realizando testes - PRODUCT CONTROLLERS:', function () {
   it('Recuperando todos os produtos com sucesso - status 200', async function () {
     sinon
       .stub(productsService, 'getProducts')

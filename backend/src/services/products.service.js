@@ -10,6 +10,15 @@ const getProducts = async () => {
   return { status: 'SUCCESSFULL', data };
 };
 
+const getProduct = async (id) => {
+  const data = await productsModel.findById(id);
+  if (!data) {
+    return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
+  }
+  return { status: 'SUCCESSFULL', data };
+};
+
 module.exports = {
   getProducts,
+  getProduct,
 };
