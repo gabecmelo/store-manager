@@ -17,10 +17,16 @@ const productsRecoveredFromService = {
   data: productsFromModel,
 };
 
+const productRecoveredFromService = {
+  status: 'SUCCESSFULL',
+  data: productFromModel,
+};
+
 module.exports = {
   productsFromModel,
   productsFromDB,
   productFromDB,
   productsRecoveredFromService,
   productFromModel,
+  productRecoveredFromService,
 };

@@ -13,7 +13,7 @@ const connection = require('../../../src/models/connection');
 const { expect } = chai;
 chai.use(require('sinon-chai'));
 
-describe('Realizando testes - PRODUCT MODELS', function () {
+describe('Realizando testes - PRODUCTS MODELS', function () {
   it('Recuperando todos os products do banco de dados', async function () {
     sinon.stub(connection, 'execute').resolves([productsFromDB]);
 
@@ -21,7 +21,7 @@ describe('Realizando testes - PRODUCT MODELS', function () {
     expect(products).to.be.an('array');
     expect(products).to.deep.equal(productsFromModel);
   });
-  it('Recuperando o produto com id do banco de dados', async function () {
+  it('Recuperando o product com id do banco de dados', async function () {
     sinon.stub(connection, 'execute').resolves([[productFromDB]]);
 
     const insertData = 42;
@@ -30,6 +30,8 @@ describe('Realizando testes - PRODUCT MODELS', function () {
     expect(product).to.be.an('object');
     expect(product).to.deep.equal(productFromModel);
   });
+
+  // IMPLEMENTAR TESTE DE NÃO ENCONTRADO
 
   afterEach(function () {
     sinon.restore();

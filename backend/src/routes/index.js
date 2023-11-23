@@ -3,5 +3,5 @@ const salesRoutes = require('./sales.routes');
 
 module.exports = {
   productsRoutes,
-  salesRoutes
+  salesRoutes,
 };
