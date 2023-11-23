@@ -18,7 +18,17 @@ const getProduct = async (id) => {
   return { status: 'SUCCESSFULL', data };
 };
 
+const insertNewProduct = async (productData) => {
+  const { name } = productData;
+
+  // Inserir validacoes
+
+  const insertId = await productsModel.insertProduct(name);
+  return { status: 'CREATED', data: insertId };
+};
+
 module.exports = {
   getProducts,
   getProduct,
+  insertNewProduct,
 };

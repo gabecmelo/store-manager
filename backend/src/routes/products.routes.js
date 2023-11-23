@@ -5,4 +5,6 @@ productsRoutes.get('/', productsController.getAllProducts);
 
 productsRoutes.get('/:id', productsController.getProductById);
 
+productsRoutes.post('/', productsController.registerNewProduct);
+
 module.exports = productsRoutes;
