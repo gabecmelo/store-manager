@@ -32,7 +32,7 @@ const createNewSale = async () => {
 };
 
 const insertProductsOnSale = async (saleId, saleData) => {
-  const teste = await Promise.all(
+  const result = await Promise.all(
     saleData.map(async (product) => {
       const { productId, quantity } = product;
       return connection.execute(
@@ -42,7 +42,7 @@ const insertProductsOnSale = async (saleId, saleData) => {
       );
     }),
   );
-  return teste;
+  return result;
 };
 
 module.exports = {
