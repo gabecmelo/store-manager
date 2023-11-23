@@ -1,4 +1,5 @@
 const { productsModel } = require('../models');
+const schema = require('./validations/validateProduct');
 
 const getProducts = async () => {
   let data = await productsModel.findAll();
@@ -21,8 +22,8 @@ const getProduct = async (id) => {
 const insertNewProduct = async (productData) => {
   const { name } = productData;
 
-  // Inserir validacoes
-
+  const error = schema.validateProduct(productData);
+  if (error) return { status: error.status, data: { message: error.message } };
   const insertId = await productsModel.insertProduct(name);
   return { status: 'CREATED', data: insertId };
 };
