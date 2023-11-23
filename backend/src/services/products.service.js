@@ -24,8 +24,8 @@ const insertNewProduct = async (productData) => {
 
   const error = schema.validateProduct(productData);
   if (error) return { status: error.status, data: { message: error.message } };
-  const insertId = await productsModel.insertProduct(name);
-  return { status: 'CREATED', data: insertId };
+  const newProduct = await productsModel.insertProduct(name);
+  return { status: 'CREATED', data: newProduct };
 };
 
 module.exports = {

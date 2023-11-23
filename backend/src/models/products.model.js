@@ -1,3 +1,4 @@
+const camelize = require('camelize');
 const connection = require('./connection');
 
 const findAll = async () => {
@@ -14,18 +15,17 @@ const findById = async (id) => {
     [id],
   );
 
-  return product;
+  return camelize(product);
 };
 
 const insertProduct = async (name) => {
-  const [insertId] = await connection.execute(
+  const [newProduct] = await connection.execute(
     `
-  INSERT INTO products(name)
-  VALUES (?);`,
+    INSERT INTO products(name)
+    VALUES (?);`,
     [name],
   );
-
-  return insertId;
+  return camelize(newProduct);
 };
 
 module.exports = {

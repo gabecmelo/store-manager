@@ -5,4 +5,6 @@ salesRoutes.get('/', salesController.getAllSales);
 
 salesRoutes.get('/:id', salesController.getSaleById);
 
+salesRoutes.post('/', salesController.registerNewSale);
+
 module.exports = salesRoutes;

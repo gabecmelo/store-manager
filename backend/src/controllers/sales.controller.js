@@ -12,7 +12,18 @@ const getSaleById = async (req, res) => {
   res.status(mapStatusHttp(status)).json(data);
 };
 
+const registerNewSale = async (req, res) => {
+  const saleData = req.body;
+
+  const { status, data } = await salesService.insertNewSale(saleData);
+
+  const newSale = { ...data, itemsSold: saleData };
+
+  res.status(mapStatusHttp(status)).json(newSale);
+};
+
 module.exports = {
   getAllSales,
   getSaleById,
+  registerNewSale,
 };
