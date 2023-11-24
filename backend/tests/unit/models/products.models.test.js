@@ -4,6 +4,7 @@ const {
   productsFromModel,
   productFromDB,
   productFromModel,
+  productIdFromModel,
 } = require('../mocks/products.mock');
 const { productsFromDB } = require('../mocks/products.mock');
 
@@ -36,6 +37,14 @@ describe('Realizando testes - PRODUCTS MODELS', function () {
     const insertData = 404;
     const product = await productsModel.findById(insertData);
     expect(product).to.be.equal(undefined);
+  });
+  it('Inserindo product no banco de dados', async function () {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 42 }]);
+
+    const insertData = { name: 'New product' };
+    const insertId = await productsModel.insertProduct(insertData);
+    expect(insertId).to.be.a('number');
+    expect(insertId).to.equal(productIdFromModel);
   });
 
   afterEach(function () {

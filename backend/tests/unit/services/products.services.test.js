@@ -5,6 +5,7 @@ const { productsModel } = require('../../../src/models');
 const {
   productsFromModel,
   productFromModel,
+  productIdFromModel,
 } = require('../mocks/products.mock');
 
 const { expect } = chai;
@@ -15,8 +16,8 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     sinon.stub(productsModel, 'findAll').resolves(productsFromModel);
 
     const responseData = [
-      { id: 1, name: 'name' },
-      { id: 2, name: 'name' },
+      { id: 1, name: 'New product' },
+      { id: 2, name: 'New product' },
     ];
 
     const serviceResponse = await productsService.getProducts();
@@ -29,7 +30,7 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     const requestId = 42;
     const responseData = {
       id: 42,
-      name: 'name',
+      name: 'New product',
     };
 
     const serviceResponse = await productsService.getProduct(requestId);
@@ -45,6 +46,21 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     const serviceResponse = await productsService.getProduct(requestId);
     expect(serviceResponse.status).to.equal('NOT_FOUND');
     expect(serviceResponse.data).to.deep.equal(responseErrorData);
+  });
+  it('Insere o product corretamente', async function () {
+    sinon.stub(productsModel, 'insertProduct').resolves(productIdFromModel);
+
+    const inputData = {
+      name: 'New product',
+    };
+
+    const responseData = {
+      insertId: 42,
+    };
+
+    const serviceResponse = await productsService.insertNewProduct(inputData);
+    expect(serviceResponse.status).to.equal('CREATED');
+    expect(serviceResponse.data).to.deep.equal(responseData);
   });
 
   afterEach(function () {

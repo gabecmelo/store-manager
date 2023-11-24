@@ -1,24 +1,35 @@
+const httpMap = {
+  SUCCESSFULL: 'SUCCESSFULL',
+  NOT_FOUND: 'NOT_FOUND',
+  CREATED: 'CREATED',
+  INVALID_VALUE: 'INVALID_VALUE',
+};
+
+const newProductName = 'New product';
+
+const productFromModel = { id: 42, name: newProductName };
+
+const productFromDB = { id: 42, name: newProductName };
+
 const productsFromModel = [
-  { id: 1, name: 'name' },
-  { id: 2, name: 'name' },
+  { id: 1, name: newProductName },
+  { id: 2, name: newProductName },
 ];
 
 const productsFromDB = [
-  { id: 1, name: 'name' },
-  { id: 2, name: 'name' },
+  { id: 1, name: newProductName },
+  { id: 2, name: newProductName },
 ];
 
-const productFromModel = { id: 42, name: 'name' };
-
-const productFromDB = { id: 42, name: 'name' };
+const productIdFromModel = 42;
 
 const productsRecoveredFromService = {
-  status: 'SUCCESSFULL',
+  status: httpMap.SUCCESSFULL,
   data: productsFromModel,
 };
 
 const productRecoveredFromService = {
-  status: 'SUCCESSFULL',
+  status: httpMap.SUCCESSFULL,
   data: productFromModel,
 };
 
@@ -31,16 +42,22 @@ const saleNotFoundMessage = {
 };
 
 const productNotRecoveredFromService = {
-  status: 'NOT_FOUND',
+  status: httpMap.NOT_FOUND,
   data: productNotFoundMessage,
 };
 
 const saleNotRecoveredFromService = {
-  status: 'NOT_FOUND',
+  status: httpMap.NOT_FOUND,
   data: saleNotFoundMessage,
 };
 
+const insertedProductFromService = {
+  status: httpMap.CREATED,
+  data: { insertId: productIdFromModel },
+};
+
 module.exports = {
+  httpMap,
   productsFromModel,
   productsFromDB,
   productFromDB,
@@ -51,4 +68,6 @@ module.exports = {
   saleNotRecoveredFromService,
   productNotFoundMessage,
   saleNotFoundMessage,
+  productIdFromModel,
+  insertedProductFromService,
 };
