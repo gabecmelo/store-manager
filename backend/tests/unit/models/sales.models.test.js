@@ -30,8 +30,14 @@ describe('Realizando testes - SALES MODELS', function () {
     expect(sale).to.be.an('array');
     expect(sale).to.deep.equal(saleFromModel);
   });
+  it('Não recupera a sale que o id não for encontrado no banco de dados', async function () {
+    sinon.stub(connection, 'execute').resolves([[]]);
 
-  // IMPLEMENTAR TESTE DE NÃO ENCONTRADA
+    const insertData = 404;
+    const sale = await salesModel.findById(insertData);
+    expect(sale).to.be.an('array');
+    expect(sale).to.have.length(0);
+  });
 
   afterEach(function () {
     sinon.restore();

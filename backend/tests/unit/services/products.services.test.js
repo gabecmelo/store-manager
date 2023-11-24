@@ -36,8 +36,16 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     expect(serviceResponse.status).to.equal('SUCCESSFULL');
     expect(serviceResponse.data).to.deep.equal(responseData);
   });
+  it('Não recupera o product com id incorreto', async function () {
+    sinon.stub(productsModel, 'findById').resolves(undefined);
 
-  // IMPLEMENTAR TESTE DE NÃO ENCONTRADO
+    const requestId = 404;
+    const responseErrorData = { message: 'Product not found' };
+
+    const serviceResponse = await productsService.getProduct(requestId);
+    expect(serviceResponse.status).to.equal('NOT_FOUND');
+    expect(serviceResponse.data).to.deep.equal(responseErrorData);
+  });
 
   afterEach(function () {
     sinon.restore();

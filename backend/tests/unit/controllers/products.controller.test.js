@@ -8,6 +8,8 @@ const {
   productsRecoveredFromService,
   productRecoveredFromService,
   productFromModel,
+  productNotRecoveredFromService,
+  productNotFoundMessage,
 } = require('../mocks/products.mock');
 
 const { expect } = chai;
@@ -49,8 +51,24 @@ describe('Realizando testes - PRODUCTS CONTROLLERS:', function () {
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(productFromModel);
   });
+  it('Não recupera o product pelo id com sucesso - status 404', async function () {
+    sinon
+      .stub(productsService, 'getProduct')
+      .resolves(productNotRecoveredFromService);
 
-  // IMPLEMENTAR TESTE DE NÃO ENCONTRADO
+    const req = {
+      params: { id: 404 },
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await productsController.getProductById(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith(productNotFoundMessage);
+  });
 
   afterEach(function () {
     sinon.restore();

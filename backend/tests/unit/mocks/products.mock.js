@@ -22,6 +22,24 @@ const productRecoveredFromService = {
   data: productFromModel,
 };
 
+const productNotFoundMessage = {
+  message: 'Product not found',
+};
+
+const saleNotFoundMessage = {
+  message: 'Sale not found',
+};
+
+const productNotRecoveredFromService = {
+  status: 'NOT_FOUND',
+  data: productNotFoundMessage,
+};
+
+const saleNotRecoveredFromService = {
+  status: 'NOT_FOUND',
+  data: saleNotFoundMessage,
+};
+
 module.exports = {
   productsFromModel,
   productsFromDB,
@@ -29,4 +47,8 @@ module.exports = {
   productsRecoveredFromService,
   productFromModel,
   productRecoveredFromService,
+  productNotRecoveredFromService,
+  saleNotRecoveredFromService,
+  productNotFoundMessage,
+  saleNotFoundMessage,
 };

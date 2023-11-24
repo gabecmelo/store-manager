@@ -9,6 +9,7 @@ const {
   saleRecoveredFromService,
   saleFromModel,
 } = require('../mocks/sales.mock');
+const { saleNotFoundMessage, saleNotRecoveredFromService } = require('../mocks/products.mock');
 
 const { expect } = chai;
 chai.use(require('sinon-chai'));
@@ -49,8 +50,25 @@ describe('Realizando testes - SALES CONTROLLERS:', function () {
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(saleFromModel);
   });
+  it('Não recupera a sale pelo id com sucesso - status 404', async function () {
+    sinon
+      .stub(salesService, 'getSale')
+      .resolves(saleNotRecoveredFromService);
 
-  // IMPLEMENTAR TESTE DE NÃO ENCONTRADA
+    const req = {
+      params: { id: 404 },
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await salesController.getSaleById(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith(saleNotFoundMessage);
+  });
+
 
   afterEach(function () {
     sinon.restore();

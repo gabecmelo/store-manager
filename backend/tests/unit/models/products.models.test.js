@@ -30,8 +30,13 @@ describe('Realizando testes - PRODUCTS MODELS', function () {
     expect(product).to.be.an('object');
     expect(product).to.deep.equal(productFromModel);
   });
+  it('Não recupera o product que o id não for encontrado no banco de dados', async function () {
+    sinon.stub(connection, 'execute').resolves([[]])
 
-  // IMPLEMENTAR TESTE DE NÃO ENCONTRADO
+    const insertData = 404;
+    const product = await productsModel.findById(insertData)
+    expect(product).to.be.undefined;
+  })
 
   afterEach(function () {
     sinon.restore();
