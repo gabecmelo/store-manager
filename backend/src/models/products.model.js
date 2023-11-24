@@ -19,13 +19,13 @@ const findById = async (id) => {
 };
 
 const insertProduct = async (name) => {
-  const [newProduct] = await connection.execute(
+  const [{insertId}] = await connection.execute(
     `
     INSERT INTO products(name)
     VALUES (?);`,
     [name],
   );
-  return camelize(newProduct);
+  return camelize(insertId);
 };
 
 module.exports = {
