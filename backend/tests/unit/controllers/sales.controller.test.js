@@ -69,7 +69,6 @@ describe('Realizando testes - SALES CONTROLLERS:', function () {
     expect(res.json).to.have.been.calledWith(saleNotFoundMessage);
   });
 
-
   afterEach(function () {
     sinon.restore();
   });
