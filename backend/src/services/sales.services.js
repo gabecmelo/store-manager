@@ -1,4 +1,4 @@
-const { salesModel, productsModel } = require('../models');
+const { salesModel } = require('../models');
 const schema = require('./validations/validateProduct');
 
 const getSales = async () => {
@@ -19,21 +19,13 @@ const getSale = async (id) => {
   return { status: 'SUCCESSFULL', data };
 };
 
-const verifyTest = async (saleData) => {
-  const products = await productsModel.findAll();
-  return saleData.every((product) => {
-    const productInStorage = products.some((p) => p.id === product.productId);
-    return productInStorage;
-  });
-};
-
 const insertNewSale = async (saleData) => {
   const error = schema.validateSale(saleData);
   if (error) {
     return { status: error.status, data: { message: error.message } };
   }
 
-  const productsInStorage = await verifyTest(saleData);
+  const productsInStorage = await schema.validateProductsInStorage(saleData);
   if (!productsInStorage) {
     return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
   }
