@@ -11,7 +11,6 @@ const {
   productNotRecoveredFromService,
   productNotFoundMessage,
   insertedProductFromService,
-  productErrors,
   productServiceErrors,
   errorsMessages,
 } = require('../mocks/products.mock');
@@ -78,7 +77,9 @@ describe('Realizando testes - PRODUCTS CONTROLLERS:', function () {
       .stub(productsService, 'insertNewProduct')
       .resolves(insertedProductFromService);
 
-    sinon.stub(productsService, 'getProduct').resolves(productRecoveredFromService);
+    sinon
+      .stub(productsService, 'getProduct')
+      .resolves(productRecoveredFromService);
 
     const req = {
       body: { name: 'New product' },
@@ -94,13 +95,13 @@ describe('Realizando testes - PRODUCTS CONTROLLERS:', function () {
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith(productFromModel);
   });
-  it('', async function () {
+  it('Não insere o product com chave incorreta', async function () {
     sinon
       .stub(productsService, 'insertNewProduct')
       .resolves(productServiceErrors.invalidValue);
 
     const req = {
-      body: { name: 'New product' },
+      body: { },
     };
 
     const res = {
@@ -111,8 +112,10 @@ describe('Realizando testes - PRODUCTS CONTROLLERS:', function () {
     await productsController.registerNewProduct(req, res);
 
     expect(res.status).to.have.been.calledWith(400);
-    expect(res.json).to.have.been.calledWith({message: errorsMessages.invalidValue});
-  })
+    expect(res.json).to.have.been.calledWith({
+      message: errorsMessages.invalidValue,
+    });
+  });
 
   afterEach(function () {
     sinon.restore();

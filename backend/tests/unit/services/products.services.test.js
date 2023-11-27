@@ -77,14 +77,16 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     expect(serviceErrorResponse.status).to.equal(httpMockMap.INVALID_VALUE);
     expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
   });
-  it('[ERRO] product sem chave name', async function () {
+  it('[ERRO] product com a chave name menor que 5 caracteres', async function () {
     sinon.stub(schema, 'validateProduct').resolves(productErrors.invalidLength);
 
     const responseErrorData = {
       message: '"name" length must be at least 5 characters long',
     };
 
-    const serviceErrorResponse = await productsService.insertNewProduct({name: "err"});
+    const serviceErrorResponse = await productsService.insertNewProduct({
+      name: 'err',
+    });
 
     expect(serviceErrorResponse.status).to.equal(httpMockMap.UNPROCESSABLE);
     expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
