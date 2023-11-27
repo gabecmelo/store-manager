@@ -10,9 +10,6 @@ const {
   productErrors,
 } = require('../mocks/products.mock');
 const { httpMockMap } = require('../mocks');
-const {
-  insertProductSchema,
-} = require('../../../src/services/validations/schemas');
 
 const { expect } = chai;
 chai.use(require('sinon-chai'));

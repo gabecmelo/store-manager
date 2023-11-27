@@ -14,7 +14,7 @@ const getProductById = async (req, res) => {
 
 const registerNewProduct = async (req, res) => {
   const product = req.body;
-  
+
   const { status, data } = await productsService.insertNewProduct(product);
 
   if (data.message) {
@@ -26,8 +26,18 @@ const registerNewProduct = async (req, res) => {
   return res.status(mapStatusHttp(status)).json(newProduct.data);
 };
 
+const modifyProduct = async (req, res) => {
+  const { id } = req.params;
+  const newProduct = req.body;
+
+  const { status, data } = await productsService.modifyProduct(id, newProduct);
+
+  res.status(mapStatusHttp(status)).json(data);
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   registerNewProduct,
+  modifyProduct,
 };

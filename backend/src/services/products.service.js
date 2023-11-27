@@ -28,12 +28,35 @@ const insertNewProduct = async (productData) => {
   }
 
   const insertId = await productsModel.insertProduct(name);
-  
+
   return { status: 'CREATED', data: { insertId } };
+};
+
+const modifyProduct = async (productId, newProduct) => {
+  const { name } = newProduct;
+  const id = Number(productId)
+  
+  const error = await schema.validateProduct(newProduct);
+
+  if (error) {
+    return { status: error.status, data: { message: error.message } };
+  }
+
+  const affectedRows = await productsModel.changeProduct(id, name);
+
+  if (affectedRows <= 0) {
+    return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
+  }
+
+  return {
+    status: 'SUCCESSFULL',
+    data: { id, name: newProduct.name },
+  };
 };
 
 module.exports = {
   getProducts,
   getProduct,
   insertNewProduct,
+  modifyProduct,
 };

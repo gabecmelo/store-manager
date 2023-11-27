@@ -44,7 +44,7 @@ const insertedProductFromService = {
 
 const productErrors = {
   invalidValue: { status: 'INVALID_VALUE', message: '""name" is required"' },
-}
+};
 
 module.exports = {
   productsFromModel,
@@ -57,5 +57,5 @@ module.exports = {
   productNotFoundMessage,
   productIdFromModel,
   insertedProductFromService,
-  productErrors
+  productErrors,
 };

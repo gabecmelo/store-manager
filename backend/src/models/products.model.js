@@ -28,8 +28,20 @@ const insertProduct = async (name) => {
   return camelize(insertId);
 };
 
+const changeProduct = async (productId, newProductData) => {
+  const [{ affectedRows }] = await connection.execute(
+    `UPDATE products
+    SET name = ?
+    WHERE id = ?`,
+    [newProductData, productId],
+  );
+
+  return affectedRows;
+};
+
 module.exports = {
   findAll,
   findById,
   insertProduct,
+  changeProduct,
 };
