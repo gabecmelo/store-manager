@@ -4,6 +4,7 @@ const httpMockMap = {
   CREATED: 'CREATED',
   INVALID_VALUE: 'INVALID_VALUE',
   UNPROCESSABLE: 'UNPROCESSABLE',
+  NO_CONTENT: 'NO_CONTENT',
 };
 
 module.exports = {

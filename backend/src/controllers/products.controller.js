@@ -40,7 +40,7 @@ const deleteProduct = async (req, res) => {
 
   const { status, data } = await productsService.deleteProduct(id);
 
-  return res.status(mapStatusHttp(status)).send(data);
+  return res.status(mapStatusHttp(status)).json(data);
 };
 
 module.exports = {

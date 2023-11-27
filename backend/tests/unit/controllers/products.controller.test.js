@@ -16,6 +16,7 @@ const {
   modifiedProductName,
   modifiedProductFromModel,
   modifiedProductFromService,
+  deletedProductFromService,
 } = require('../mocks/products.mock');
 
 const { expect } = chai;
@@ -137,6 +138,23 @@ describe('Realizando testes - PRODUCTS CONTROLLERS:', function () {
     await productsController.modifyProduct(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(modifiedProductFromModel);
+  });
+  it('Deleta o produto corretamente - status 204', async function () {
+    sinon
+      .stub(productsService, 'deleteProduct')
+      .resolves(deletedProductFromService);
+
+    const req = {
+      params: { id: 42 },
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await productsController.deleteProduct(req, res);
+    expect(res.status).to.have.been.calledWith(204);
   });
 
   afterEach(function () {

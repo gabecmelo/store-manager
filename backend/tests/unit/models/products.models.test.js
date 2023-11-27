@@ -4,7 +4,8 @@ const {
   productsFromModel,
   productFromDB,
   productFromModel,
-  productIdFromModel,
+  productIdFromDB,
+  affectedRowsFromDB,
 } = require('../mocks/products.mock');
 const { productsFromDB } = require('../mocks/products.mock');
 
@@ -44,7 +45,15 @@ describe('Realizando testes - PRODUCTS MODELS', function () {
     const insertData = { name: 'New product' };
     const insertId = await productsModel.insertProduct(insertData);
     expect(insertId).to.be.a('number');
-    expect(insertId).to.equal(productIdFromModel);
+    expect(insertId).to.equal(productIdFromDB);
+  });
+  it('Modifica o product corretamente no banco de dados', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+
+    const insertData = { name: 'Modified product' };
+    const affectedRows = await productsModel.changeProduct(insertData);
+    expect(affectedRows).to.be.a('number');
+    expect(affectedRows).to.equal(affectedRowsFromDB);
   });
 
   // Adicionar verificação de ERROS ao inserir product

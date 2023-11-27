@@ -6,7 +6,7 @@ const schema = require('../../../src/services/validations/validateProduct');
 const {
   productsFromModel,
   productFromModel,
-  productIdFromModel,
+  productIdFromDB,
   productErrors,
 } = require('../mocks/products.mock');
 const { httpMockMap } = require('../mocks');
@@ -51,7 +51,7 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     expect(serviceResponse.data).to.deep.equal(responseErrorData);
   });
   it('Insere o product corretamente', async function () {
-    sinon.stub(productsModel, 'insertProduct').resolves(productIdFromModel);
+    sinon.stub(productsModel, 'insertProduct').resolves(productIdFromDB);
 
     const inputData = {
       name: 'New product',
@@ -91,17 +91,17 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     expect(serviceErrorResponse.status).to.equal(httpMockMap.UNPROCESSABLE);
     expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
   });
-  it('', async function () {
-    sinon.stub(productsModel, 'findAll').resolves([])
+  it('Indica que não há products disponíveis quando não é encontrado nenhum product', async function () {
+    sinon.stub(productsModel, 'findAll').resolves([]);
 
     const responseErrorData = {
-      message: 'Não há produtos disponíveis'
-    }
+      message: 'Não há produtos disponíveis',
+    };
 
     const serviceErrorResponse = await productsService.getProducts();
     expect(serviceErrorResponse.status).to.equal(httpMockMap.SUCCESSFULL);
     expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
-  })
+  });
   // COBRIR VALIDATIONS
 
   afterEach(function () {

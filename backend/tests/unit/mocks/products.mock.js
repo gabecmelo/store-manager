@@ -19,7 +19,8 @@ const productsFromDB = [
   { id: 2, name: newProductName },
 ];
 
-const productIdFromModel = 42;
+const productIdFromDB = 42;
+const affectedRowsFromDB = 1;
 
 const productsRecoveredFromService = {
   status: httpMockMap.SUCCESSFULL,
@@ -42,12 +43,17 @@ const productNotRecoveredFromService = {
 
 const insertedProductFromService = {
   status: httpMockMap.CREATED,
-  data: { insertId: productIdFromModel },
+  data: { insertId: productIdFromDB },
 };
 
 const modifiedProductFromService = {
   status: httpMockMap.SUCCESSFULL,
   data: modifiedProductFromModel,
+};
+
+const deletedProductFromService = {
+  status: httpMockMap.NO_CONTENT,
+  data: undefined,
 };
 
 const errorsMessages = {
@@ -86,12 +92,14 @@ module.exports = {
   productRecoveredFromService,
   productNotRecoveredFromService,
   productNotFoundMessage,
-  productIdFromModel,
+  productIdFromDB,
   insertedProductFromService,
   productErrors,
   productServiceErrors,
   errorsMessages,
   modifiedProductName,
   modifiedProductFromModel,
-  modifiedProductFromService
+  modifiedProductFromService,
+  deletedProductFromService,
+  affectedRowsFromDB,
 };
