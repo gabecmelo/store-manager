@@ -37,7 +37,7 @@ const insertNewProduct = async (productData) => {
   const { name } = productData;
 
   const error = await schema.validateProduct(productData);
-  if (error) {
+  if (error.status !== 'VALID') {
     return { status: error.status, data: { message: error.message } };
   }
 

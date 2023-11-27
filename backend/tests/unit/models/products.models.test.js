@@ -55,6 +55,14 @@ describe('Realizando testes - PRODUCTS MODELS', function () {
     expect(affectedRows).to.be.a('number');
     expect(affectedRows).to.equal(affectedRowsFromDB);
   });
+  it('Delete o product do banco de dados com sucesso', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1}])
+
+    const insertProductId = 1
+    const affectedRows = await productsModel.deleteProduct(insertProductId)
+    expect(affectedRows).to.be.a('number')
+    expect(affectedRows).to.equal(affectedRowsFromDB)
+  })
 
   // Adicionar verificação de ERROS ao inserir product
 
