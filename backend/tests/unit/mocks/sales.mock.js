@@ -1,4 +1,4 @@
-const { httpMockMap } = require(".");
+const { httpMockMap } = require('.');
 
 const salesFromModel = [
   { saleId: 1, date: '2023-11-23 14:00:14', productId: '1', quantity: 5 },
@@ -41,9 +41,14 @@ const saleNotRecoveredFromService = {
   data: saleNotFoundMessage,
 };
 
+const saleServiceDataResponse = {
+  id: 1,
+  itemsSold: [{ productId: 1, quantity: 2 }],
+};
+
 const insertedSaleFromService = {
   status: httpMockMap.CREATED,
-  data: saleFromModel,
+  data: saleServiceDataResponse,
 };
 
 module.exports = {
@@ -57,4 +62,5 @@ module.exports = {
   saleRecoveredFromService,
   insertedSaleFromService,
   saleNotFoundMessage,
+  saleServiceDataResponse,
 };

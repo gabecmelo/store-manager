@@ -11,6 +11,7 @@ const {
   saleNotRecoveredFromService,
   saleNotFoundMessage,
   insertedSaleFromService,
+  saleServiceDataResponse,
 } = require('../mocks/sales.mock');
 
 const { expect } = chai;
@@ -78,7 +79,7 @@ describe('Realizando testes - SALES CONTROLLERS:', function () {
 
     await salesController.registerNewSale(req, res);
     expect(res.status).to.have.been.calledWith(201);
-    expect(res.data).to.have.been.calledWith(saleFromModel);
+    expect(res.json).to.have.been.calledWith(saleServiceDataResponse);
   });
 
   afterEach(function () {

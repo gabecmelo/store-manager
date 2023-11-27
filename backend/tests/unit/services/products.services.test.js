@@ -64,6 +64,8 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     expect(serviceResponse.data).to.deep.equal(responseData);
   });
 
+  // COBRIR VALIDATIONS
+
   afterEach(function () {
     sinon.restore();
   });
