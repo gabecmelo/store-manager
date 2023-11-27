@@ -13,6 +13,9 @@ const {
   insertedProductFromService,
   productServiceErrors,
   errorsMessages,
+  modifiedProductName,
+  modifiedProductFromModel,
+  modifiedProductFromService,
 } = require('../mocks/products.mock');
 
 const { expect } = chai;
@@ -95,13 +98,13 @@ describe('Realizando testes - PRODUCTS CONTROLLERS:', function () {
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith(productFromModel);
   });
-  it('Não insere o product com chave incorreta', async function () {
+  it('Não insere o product com chave incorreta - status 400', async function () {
     sinon
       .stub(productsService, 'insertNewProduct')
       .resolves(productServiceErrors.invalidValue);
 
     const req = {
-      body: { },
+      body: {},
     };
 
     const res = {
@@ -115,6 +118,25 @@ describe('Realizando testes - PRODUCTS CONTROLLERS:', function () {
     expect(res.json).to.have.been.calledWith({
       message: errorsMessages.invalidValue,
     });
+  });
+  it('Modifica o produto corretamente - status 200', async function () {
+    sinon
+      .stub(productsService, 'modifyProduct')
+      .resolves(modifiedProductFromService);
+
+    const req = {
+      params: { id: 42 },
+      body: { name: 'Modified product' },
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await productsController.modifyProduct(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(modifiedProductFromModel);
   });
 
   afterEach(function () {

@@ -1,6 +1,9 @@
 const { httpMockMap } = require('.');
 
 const newProductName = 'New product';
+const modifiedProductName = 'New product';
+
+const modifiedProductFromModel = { id: 42, name: modifiedProductName };
 
 const productFromModel = { id: 42, name: newProductName };
 
@@ -40,6 +43,11 @@ const productNotRecoveredFromService = {
 const insertedProductFromService = {
   status: httpMockMap.CREATED,
   data: { insertId: productIdFromModel },
+};
+
+const modifiedProductFromService = {
+  status: httpMockMap.SUCCESSFULL,
+  data: modifiedProductFromModel,
 };
 
 const errorsMessages = {
@@ -83,4 +91,7 @@ module.exports = {
   productErrors,
   productServiceErrors,
   errorsMessages,
+  modifiedProductName,
+  modifiedProductFromModel,
+  modifiedProductFromService
 };
