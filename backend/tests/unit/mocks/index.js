@@ -6,5 +6,5 @@ const httpMockMap = {
 };
 
 module.exports = {
-  httpMockMap
-}
+  httpMockMap,
+};

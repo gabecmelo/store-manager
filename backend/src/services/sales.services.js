@@ -19,21 +19,21 @@ const getSale = async (id) => {
   return { status: 'SUCCESSFULL', data };
 };
 
-  const insertNewSale = async (saleData) => {
-    const error = schema.validateSale(saleData);
-    if (error) {
-      return { status: error.status, data: { message: error.message } };
-    }
+const insertNewSale = async (saleData) => {
+  const error = schema.validateSale(saleData);
+  if (error) {
+    return { status: error.status, data: { message: error.message } };
+  }
 
-    const productsInStorage = await schema.validateProductsInStorage(saleData);
-    if (!productsInStorage) {
-      return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
-    }
+  const productsInStorage = await schema.validateProductsInStorage(saleData);
+  if (!productsInStorage) {
+    return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
+  }
 
-    const insertId = await salesModel.createNewSale();
-    await salesModel.insertProductsOnSale(insertId, saleData);
-    return { status: 'CREATED', data: { id: insertId, itemsSold: saleData } };
-  };
+  const insertId = await salesModel.createNewSale();
+  await salesModel.insertProductsOnSale(insertId, saleData);
+  return { status: 'CREATED', data: { id: insertId, itemsSold: saleData } };
+};
 
 module.exports = {
   getSales,

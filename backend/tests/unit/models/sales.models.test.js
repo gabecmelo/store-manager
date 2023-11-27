@@ -61,7 +61,7 @@ describe('Realizando testes - SALES MODELS', function () {
     expect(affectedRows).to.equal(1);
   });
 
-  //INSERIR VERIFICACAO DE ERROS 
+  // INSERIR VERIFICACAO DE ERROS
 
   afterEach(function () {
     sinon.restore();
