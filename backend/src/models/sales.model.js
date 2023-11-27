@@ -24,15 +24,15 @@ const findById = async (id) => {
 };
 
 const createNewSale = async () => {
-  const [newSale] = await connection.execute(
+  const [{insertId}] = await connection.execute(
     `INSERT INTO sales(date)
     VALUES(now())`,
   );
-  return camelize(newSale);
+  return camelize(insertId);
 };
 
 const insertProductsOnSale = async (saleId, saleData) => {
-  const result = await Promise.all(
+  const insertedProducts = await Promise.all(
     saleData.map(async (product) => {
       const { productId, quantity } = product;
       return connection.execute(
@@ -42,7 +42,7 @@ const insertProductsOnSale = async (saleId, saleData) => {
       );
     }),
   );
-  return result;
+  return insertedProducts;
 };
 
 module.exports = {

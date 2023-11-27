@@ -7,6 +7,7 @@ const {
   productFromModel,
   productIdFromModel,
 } = require('../mocks/products.mock');
+const { httpMockMap } = require('../mocks');
 
 const { expect } = chai;
 chai.use(require('sinon-chai'));
@@ -21,7 +22,7 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     ];
 
     const serviceResponse = await productsService.getProducts();
-    expect(serviceResponse.status).to.equal('SUCCESSFULL');
+    expect(serviceResponse.status).to.equal(httpMockMap.SUCCESSFULL);
     expect(serviceResponse.data).to.deep.equal(responseData);
   });
   it('Recupera o product pelo id com sucesso', async function () {
@@ -34,7 +35,7 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     };
 
     const serviceResponse = await productsService.getProduct(requestId);
-    expect(serviceResponse.status).to.equal('SUCCESSFULL');
+    expect(serviceResponse.status).to.equal(httpMockMap.SUCCESSFULL);
     expect(serviceResponse.data).to.deep.equal(responseData);
   });
   it('Não recupera o product com id incorreto', async function () {
@@ -44,7 +45,7 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     const responseErrorData = { message: 'Product not found' };
 
     const serviceResponse = await productsService.getProduct(requestId);
-    expect(serviceResponse.status).to.equal('NOT_FOUND');
+    expect(serviceResponse.status).to.equal(httpMockMap.NOT_FOUND);
     expect(serviceResponse.data).to.deep.equal(responseErrorData);
   });
   it('Insere o product corretamente', async function () {
@@ -59,7 +60,7 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     };
 
     const serviceResponse = await productsService.insertNewProduct(inputData);
-    expect(serviceResponse.status).to.equal('CREATED');
+    expect(serviceResponse.status).to.equal(httpMockMap.CREATED);
     expect(serviceResponse.data).to.deep.equal(responseData);
   });
 

@@ -3,6 +3,7 @@ const chai = require('chai');
 const { salesService } = require('../../../src/services');
 const { salesModel } = require('../../../src/models');
 const { salesFromModel, saleFromModel } = require('../mocks/sales.mock');
+const { httpMockMap } = require('../mocks');
 
 const { expect } = chai;
 chai.use(require('sinon-chai'));
@@ -17,7 +18,7 @@ describe('Realizando testes - SALES SERVICES', function () {
     ];
 
     const serviceResponse = await salesService.getSales();
-    expect(serviceResponse.status).to.equal('SUCCESSFULL');
+    expect(serviceResponse.status).to.equal(httpMockMap.SUCCESSFULL);
     expect(serviceResponse.data).to.deep.equal(responseData);
   });
   it('Recupera a sale pelo id com sucesso', async function () {
@@ -30,7 +31,7 @@ describe('Realizando testes - SALES SERVICES', function () {
     ];
 
     const serviceResponse = await salesService.getSale(requestId);
-    expect(serviceResponse.status).to.equal('SUCCESSFULL');
+    expect(serviceResponse.status).to.equal(httpMockMap.SUCCESSFULL);
     expect(serviceResponse.data).to.deep.equal(responseData);
   });
   it('Não recupera o sale com id incorreto', async function () {
@@ -40,7 +41,7 @@ describe('Realizando testes - SALES SERVICES', function () {
     const responseErrorData = { message: 'Sale not found' };
 
     const serviceResponse = await salesService.getSale(requestId);
-    expect(serviceResponse.status).to.equal('NOT_FOUND');
+    expect(serviceResponse.status).to.equal(httpMockMap.NOT_FOUND);
     expect(serviceResponse.data).to.deep.equal(responseErrorData);
   });
 

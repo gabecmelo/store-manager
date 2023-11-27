@@ -8,17 +8,17 @@ const {
   salesRecoveredFromService,
   saleRecoveredFromService,
   saleFromModel,
+  saleNotRecoveredFromService,
+  saleNotFoundMessage,
+  insertedSaleFromService,
 } = require('../mocks/sales.mock');
-const { saleNotFoundMessage, saleNotRecoveredFromService } = require('../mocks/products.mock');
 
 const { expect } = chai;
 chai.use(require('sinon-chai'));
 
 describe('Realizando testes - SALES CONTROLLERS:', function () {
   it('Recuperando todos os produtos com sucesso - status 200', async function () {
-    sinon
-      .stub(salesService, 'getSales')
-      .resolves(salesRecoveredFromService);
+    sinon.stub(salesService, 'getSales').resolves(salesRecoveredFromService);
 
     const req = {
       body: 'nothing here',
@@ -33,9 +33,7 @@ describe('Realizando testes - SALES CONTROLLERS:', function () {
     expect(res.json).to.have.been.calledWith(salesFromModel);
   });
   it('Recuperando o produto especifico com sucesso - status 200', async function () {
-    sinon
-      .stub(salesService, 'getSale')
-      .resolves(saleRecoveredFromService);
+    sinon.stub(salesService, 'getSale').resolves(saleRecoveredFromService);
 
     const req = {
       params: { id: 1 },
@@ -51,9 +49,7 @@ describe('Realizando testes - SALES CONTROLLERS:', function () {
     expect(res.json).to.have.been.calledWith(saleFromModel);
   });
   it('Não recupera a sale pelo id com sucesso - status 404', async function () {
-    sinon
-      .stub(salesService, 'getSale')
-      .resolves(saleNotRecoveredFromService);
+    sinon.stub(salesService, 'getSale').resolves(saleNotRecoveredFromService);
 
     const req = {
       params: { id: 404 },
@@ -67,6 +63,22 @@ describe('Realizando testes - SALES CONTROLLERS:', function () {
     await salesController.getSaleById(req, res);
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith(saleNotFoundMessage);
+  });
+  it('Insere sale com sucesso - status 201', async function () {
+    sinon.stub(salesService, 'insertNewSale').resolves(insertedSaleFromService);
+
+    const req = {
+      body: [{ insertId: 1, quantity: 2 }],
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await salesController.registerNewSale(req, res);
+    expect(res.status).to.have.been.calledWith(201);
+    expect(res.data).to.have.been.calledWith(saleFromModel);
   });
 
   afterEach(function () {

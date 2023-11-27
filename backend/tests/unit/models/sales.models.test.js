@@ -38,6 +38,30 @@ describe('Realizando testes - SALES MODELS', function () {
     expect(sale).to.be.an('array');
     expect(sale).to.have.length(0);
   });
+  it('Insere sale no banco de dados com sucesso', async function () {
+    sinon
+      .stub(connection, 'execute')
+      .onFirstCall()
+      .resolves([{ insertId: 42 }])
+      .onSecondCall()
+      .resolves([{ affectedRows: 1 }]);
+
+    const insertId = await salesModel.createNewSale();
+    expect(insertId).to.be.a('number');
+    expect(insertId).to.equal(42);
+
+    const insertData = [{ productId: 1, quantity: 2 }];
+
+    const [[{ affectedRows }]] = await salesModel.insertProductsOnSale(
+      insertId,
+      insertData,
+    );
+
+    expect(affectedRows).to.be.a('number');
+    expect(affectedRows).to.equal(1);
+  });
+
+  //INSERIR VERIFICACAO DE ERROS 
 
   afterEach(function () {
     sinon.restore();

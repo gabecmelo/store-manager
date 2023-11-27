@@ -1,9 +1,4 @@
-const httpMap = {
-  SUCCESSFULL: 'SUCCESSFULL',
-  NOT_FOUND: 'NOT_FOUND',
-  CREATED: 'CREATED',
-  INVALID_VALUE: 'INVALID_VALUE',
-};
+const { httpMockMap } = require('.');
 
 const newProductName = 'New product';
 
@@ -24,12 +19,12 @@ const productsFromDB = [
 const productIdFromModel = 42;
 
 const productsRecoveredFromService = {
-  status: httpMap.SUCCESSFULL,
+  status: httpMockMap.SUCCESSFULL,
   data: productsFromModel,
 };
 
 const productRecoveredFromService = {
-  status: httpMap.SUCCESSFULL,
+  status: httpMockMap.SUCCESSFULL,
   data: productFromModel,
 };
 
@@ -37,27 +32,17 @@ const productNotFoundMessage = {
   message: 'Product not found',
 };
 
-const saleNotFoundMessage = {
-  message: 'Sale not found',
-};
-
 const productNotRecoveredFromService = {
-  status: httpMap.NOT_FOUND,
+  status: httpMockMap.NOT_FOUND,
   data: productNotFoundMessage,
 };
 
-const saleNotRecoveredFromService = {
-  status: httpMap.NOT_FOUND,
-  data: saleNotFoundMessage,
-};
-
 const insertedProductFromService = {
-  status: httpMap.CREATED,
+  status: httpMockMap.CREATED,
   data: { insertId: productIdFromModel },
 };
 
 module.exports = {
-  httpMap,
   productsFromModel,
   productsFromDB,
   productFromDB,
@@ -65,9 +50,7 @@ module.exports = {
   productFromModel,
   productRecoveredFromService,
   productNotRecoveredFromService,
-  saleNotRecoveredFromService,
   productNotFoundMessage,
-  saleNotFoundMessage,
   productIdFromModel,
   insertedProductFromService,
 };

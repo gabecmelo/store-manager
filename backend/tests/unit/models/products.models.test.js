@@ -47,6 +47,8 @@ describe('Realizando testes - PRODUCTS MODELS', function () {
     expect(insertId).to.equal(productIdFromModel);
   });
 
+  // Adicionar verificação de ERROS ao inserir product
+
   afterEach(function () {
     sinon.restore();
   });
