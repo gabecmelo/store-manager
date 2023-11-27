@@ -42,9 +42,27 @@ const insertedProductFromService = {
   data: { insertId: productIdFromModel },
 };
 
+const errorsMessages = {
+  invalidValue: '""name" is required"',
+  invalidLength: '"name" length must be at least 5 characters long'
+}
+
 const productErrors = {
-  invalidValue: { status: 'INVALID_VALUE', message: '""name" is required"' },
+  invalidValue: { status: 'INVALID_VALUE', message: errorsMessages.invalidValue },
+  invalidLength: {
+    status: 'UNPROCESSABLE',
+    message: errorsMessages.invalidLength,
+  },
 };
+
+const productServiceErrors = {
+  invalidValue: { status: 'INVALID_VALUE', data: {message: errorsMessages.invalidValue} },
+  invalidLength: {
+    status: 'UNPROCESSABLE',
+    message: errorsMessages.invalidLength,
+  },
+};
+
 
 module.exports = {
   productsFromModel,
@@ -58,4 +76,6 @@ module.exports = {
   productIdFromModel,
   insertedProductFromService,
   productErrors,
+  productServiceErrors,
+  errorsMessages
 };

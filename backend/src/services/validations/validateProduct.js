@@ -7,7 +7,7 @@ const validateProduct = (productData) => {
     return {
       status: error.message.includes('required')
         ? 'INVALID_VALUE'
-        : 'NOT_FOUND_VALUE',
+        : 'UNPROCESSABLE',
       message: error.message,
     };
   }

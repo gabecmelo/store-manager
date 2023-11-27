@@ -67,7 +67,7 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
   });
   it('[ERRO] product sem chave name', async function () {
     sinon.stub(schema, 'validateProduct').resolves(productErrors.invalidValue);
-    
+
     const responseErrorData = {
       message: '""name" is required"',
     };
@@ -75,6 +75,18 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     const serviceErrorResponse = await productsService.insertNewProduct({});
 
     expect(serviceErrorResponse.status).to.equal(httpMockMap.INVALID_VALUE);
+    expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
+  });
+  it('[ERRO] product sem chave name', async function () {
+    sinon.stub(schema, 'validateProduct').resolves(productErrors.invalidLength);
+
+    const responseErrorData = {
+      message: '"name" length must be at least 5 characters long',
+    };
+
+    const serviceErrorResponse = await productsService.insertNewProduct({name: "err"});
+
+    expect(serviceErrorResponse.status).to.equal(httpMockMap.UNPROCESSABLE);
     expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
   });
   // COBRIR VALIDATIONS

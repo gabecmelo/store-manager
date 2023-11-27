@@ -11,6 +11,9 @@ const {
   productNotRecoveredFromService,
   productNotFoundMessage,
   insertedProductFromService,
+  productErrors,
+  productServiceErrors,
+  errorsMessages,
 } = require('../mocks/products.mock');
 
 const { expect } = chai;
@@ -91,6 +94,25 @@ describe('Realizando testes - PRODUCTS CONTROLLERS:', function () {
     expect(res.status).to.have.been.calledWith(201);
     expect(res.json).to.have.been.calledWith(productFromModel);
   });
+  it('', async function () {
+    sinon
+      .stub(productsService, 'insertNewProduct')
+      .resolves(productServiceErrors.invalidValue);
+
+    const req = {
+      body: { name: 'New product' },
+    };
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    await productsController.registerNewProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(400);
+    expect(res.json).to.have.been.calledWith({message: errorsMessages.invalidValue});
+  })
 
   afterEach(function () {
     sinon.restore();

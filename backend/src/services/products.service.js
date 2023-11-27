@@ -34,8 +34,8 @@ const insertNewProduct = async (productData) => {
 
 const modifyProduct = async (productId, newProduct) => {
   const { name } = newProduct;
-  const id = Number(productId)
-  
+  const id = Number(productId);
+
   const error = await schema.validateProduct(newProduct);
 
   if (error) {
