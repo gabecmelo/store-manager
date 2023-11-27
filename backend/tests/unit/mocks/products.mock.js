@@ -42,6 +42,10 @@ const insertedProductFromService = {
   data: { insertId: productIdFromModel },
 };
 
+const productErrors = {
+  invalidValue: { status: 'INVALID_VALUE', message: '""name" is required"' },
+}
+
 module.exports = {
   productsFromModel,
   productsFromDB,
@@ -53,4 +57,5 @@ module.exports = {
   productNotFoundMessage,
   productIdFromModel,
   insertedProductFromService,
+  productErrors
 };

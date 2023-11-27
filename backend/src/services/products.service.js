@@ -22,13 +22,13 @@ const getProduct = async (id) => {
 const insertNewProduct = async (productData) => {
   const { name } = productData;
 
-  const error = schema.validateProduct(productData);
-
+  const error = await schema.validateProduct(productData);
   if (error) {
     return { status: error.status, data: { message: error.message } };
   }
 
   const insertId = await productsModel.insertProduct(name);
+  
   return { status: 'CREATED', data: { insertId } };
 };
 

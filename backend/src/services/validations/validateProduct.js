@@ -1,5 +1,5 @@
 const { productsModel } = require('../../models');
-const { insertProductSchema, insertSaleSchema } = require('./schemas');
+const { insertProductSchema } = require('./schemas');
 
 const validateProduct = (productData) => {
   const { error } = insertProductSchema.validate(productData);
@@ -9,19 +9,6 @@ const validateProduct = (productData) => {
         ? 'INVALID_VALUE'
         : 'NOT_FOUND_VALUE',
       message: error.message,
-    };
-  }
-};
-
-const validateSale = (saleData) => {
-  const { error } = insertSaleSchema.validate(saleData);
-  if (error) {
-    const cleanedMessage = error.message.replace(/\[\d+\]\./g, '');
-    return {
-      status: error.message.includes('required')
-        ? 'INVALID_VALUE'
-        : 'NOT_FOUND_VALUE',
-      message: cleanedMessage,
     };
   }
 };
@@ -36,6 +23,5 @@ const validateProductsInStorage = async (saleData) => {
 
 module.exports = {
   validateProduct,
-  validateSale,
   validateProductsInStorage,
 };

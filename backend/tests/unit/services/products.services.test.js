@@ -2,12 +2,17 @@ const sinon = require('sinon');
 const chai = require('chai');
 const { productsService } = require('../../../src/services');
 const { productsModel } = require('../../../src/models');
+const schema = require('../../../src/services/validations/validateProduct');
 const {
   productsFromModel,
   productFromModel,
   productIdFromModel,
+  productErrors,
 } = require('../mocks/products.mock');
 const { httpMockMap } = require('../mocks');
+const {
+  insertProductSchema,
+} = require('../../../src/services/validations/schemas');
 
 const { expect } = chai;
 chai.use(require('sinon-chai'));
@@ -63,7 +68,18 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     expect(serviceResponse.status).to.equal(httpMockMap.CREATED);
     expect(serviceResponse.data).to.deep.equal(responseData);
   });
+  it('[ERRO] product sem chave name', async function () {
+    sinon.stub(schema, 'validateProduct').resolves(productErrors.invalidValue);
+    
+    const responseErrorData = {
+      message: '""name" is required"',
+    };
 
+    const serviceErrorResponse = await productsService.insertNewProduct({});
+
+    expect(serviceErrorResponse.status).to.equal(httpMockMap.INVALID_VALUE);
+    expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
+  });
   // COBRIR VALIDATIONS
 
   afterEach(function () {
