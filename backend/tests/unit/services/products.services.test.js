@@ -91,6 +91,17 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     expect(serviceErrorResponse.status).to.equal(httpMockMap.UNPROCESSABLE);
     expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
   });
+  it('', async function () {
+    sinon.stub(productsModel, 'findAll').resolves([])
+
+    const responseErrorData = {
+      message: 'Não há produtos disponíveis'
+    }
+
+    const serviceErrorResponse = await productsService.getProducts();
+    expect(serviceErrorResponse.status).to.equal(httpMockMap.SUCCESSFULL);
+    expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
+  })
   // COBRIR VALIDATIONS
 
   afterEach(function () {

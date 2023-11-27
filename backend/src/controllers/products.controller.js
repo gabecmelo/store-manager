@@ -3,13 +3,13 @@ const { mapStatusHttp } = require('../utils/mapStatusHttp');
 
 const getAllProducts = async (_req, res) => {
   const { status, data } = await productsService.getProducts();
-  res.status(mapStatusHttp(status)).json(data);
+  return res.status(mapStatusHttp(status)).json(data);
 };
 
 const getProductById = async (req, res) => {
   const { id } = req.params;
   const { status, data } = await productsService.getProduct(id);
-  res.status(mapStatusHttp(status)).json(data);
+  return res.status(mapStatusHttp(status)).json(data);
 };
 
 const registerNewProduct = async (req, res) => {
@@ -32,7 +32,15 @@ const modifyProduct = async (req, res) => {
 
   const { status, data } = await productsService.modifyProduct(id, newProduct);
 
-  res.status(mapStatusHttp(status)).json(data);
+  return res.status(mapStatusHttp(status)).json(data);
+};
+
+const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+
+  const { status, data } = await productsService.deleteProduct(id);
+
+  return res.status(mapStatusHttp(status)).send(data);
 };
 
 module.exports = {
@@ -40,4 +48,5 @@ module.exports = {
   getProductById,
   registerNewProduct,
   modifyProduct,
+  deleteProduct,
 };

@@ -4,6 +4,7 @@ const httpMap = {
   CREATED: 201,
   INVALID_VALUE: 400,
   UNPROCESSABLE: 422,
+  NO_CONTENT: 204,
 };
 
 const mapStatusHttp = (status) => httpMap[status] || 500;
