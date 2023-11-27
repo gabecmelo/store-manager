@@ -37,7 +37,7 @@ const insertNewProduct = async (productData) => {
   const { name } = productData;
 
   const error = await schema.validateProduct(productData);
-  if (error.status !== 'VALID') {
+  if (error) {
     return { status: error.status, data: { message: error.message } };
   }
 
@@ -47,17 +47,17 @@ const insertNewProduct = async (productData) => {
 };
 
 const modifyProduct = async (productId, newProduct) => {
-  const { name } = newProduct;
   const id = Number(productId);
-
+  
   const error = await schema.validateProduct(newProduct);
-
+  
   if (error) {
     return { status: error.status, data: { message: error.message } };
   }
-
+  
+  const { name } = newProduct;
   const affectedRows = await productsModel.changeProduct(id, name);
-
+  
   if (affectedRows <= 0) {
     return {
       status: status.NOT_FOUND,

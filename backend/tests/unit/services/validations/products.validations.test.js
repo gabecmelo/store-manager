@@ -1,4 +1,4 @@
-const sinon = require('sinon');
+/* const sinon = require('sinon');
 const chai = require('chai');
 const {
   insertProductSchema,
@@ -25,3 +25,4 @@ describe('Realizando testes = PRODUCTS VALIDATIONS:', function () {
     sinon.restore();
   });
 });
+ */

@@ -8,6 +8,7 @@ const {
   productFromModel,
   productIdFromDB,
   productErrors,
+  affectedRowsFromDB,
 } = require('../mocks/products.mock');
 const { httpMockMap } = require('../mocks');
 
@@ -102,7 +103,25 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
     expect(serviceErrorResponse.status).to.equal(httpMockMap.SUCCESSFULL);
     expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
   });
-  // COBRIR VALIDATIONS
+  it('Modifica o product do banco de dados corretamente', async function () {
+    sinon.stub(productsModel, 'changeProduct').resolves(affectedRowsFromDB);
+
+    const inputId = 1;
+    const inputData = { name: 'Modified product' };
+
+    const serviceResponse = await productsService.modifyProduct(
+      inputId,
+      inputData
+    );
+
+    const responseData = {
+      id: inputId,
+      name: inputData.name
+    }
+
+    expect(serviceResponse.status).to.equal(httpMockMap.SUCCESSFULL)
+    expect(serviceResponse.data).to.deep.equal(responseData)
+  });
 
   afterEach(function () {
     sinon.restore();

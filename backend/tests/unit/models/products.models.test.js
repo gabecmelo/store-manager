@@ -64,8 +64,6 @@ describe('Realizando testes - PRODUCTS MODELS', function () {
     expect(affectedRows).to.equal(affectedRowsFromDB)
   })
 
-  // Adicionar verificação de ERROS ao inserir product
-
   afterEach(function () {
     sinon.restore();
   });

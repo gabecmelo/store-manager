@@ -45,8 +45,6 @@ describe('Realizando testes - SALES SERVICES', function () {
     expect(serviceResponse.data).to.deep.equal(responseErrorData);
   });
 
-  // COBRIR VALIDATIONS
-
   afterEach(function () {
     sinon.restore();
   });

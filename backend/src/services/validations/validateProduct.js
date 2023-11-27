@@ -11,9 +11,6 @@ const validateProduct = (productData) => {
       message: error.message,
     };
   }
-  return {
-    status: 'VALID',
-  };
 };
 
 const validateProductsInStorage = async (saleData) => {
