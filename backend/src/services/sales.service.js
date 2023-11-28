@@ -1,5 +1,6 @@
 const { salesModel } = require('../models');
-const schema = require('./validations/validateSale');
+const saleSchema = require('./validations/validateSale');
+const productSchema = require('./validations/validateProduct');
 
 const getSales = async () => {
   let data = await salesModel.findAll();
@@ -20,12 +21,12 @@ const getSale = async (id) => {
 };
 
 const insertNewSale = async (saleData) => {
-  const error = schema.validateSale(saleData);
+  const error = saleSchema.validateSale(saleData);
   if (error) {
     return { status: error.status, data: { message: error.message } };
   }
 
-  const productsInStorage = await schema.validateProductsInStorage(saleData);
+  const productsInStorage = await productSchema.validateProductsInStorage(saleData);
   if (!productsInStorage) {
     return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
   }

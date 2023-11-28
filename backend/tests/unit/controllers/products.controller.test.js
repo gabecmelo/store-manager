@@ -13,7 +13,6 @@ const {
   insertedProductFromService,
   productServiceErrors,
   errorsMessages,
-  modifiedProductName,
   modifiedProductFromModel,
   modifiedProductFromService,
   deletedProductFromService,

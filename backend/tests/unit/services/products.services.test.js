@@ -111,16 +111,34 @@ describe('Realizando testes - PRODUCTS SERVICES', function () {
 
     const serviceResponse = await productsService.modifyProduct(
       inputId,
-      inputData
+      inputData,
     );
 
     const responseData = {
       id: inputId,
-      name: inputData.name
-    }
+      name: inputData.name,
+    };
 
-    expect(serviceResponse.status).to.equal(httpMockMap.SUCCESSFULL)
-    expect(serviceResponse.data).to.deep.equal(responseData)
+    expect(serviceResponse.status).to.equal(httpMockMap.SUCCESSFULL);
+    expect(serviceResponse.data).to.deep.equal(responseData);
+  });
+  it('[ERRO] Retorna erro ao não encontrar o produto com o id passado', async function () {
+    sinon.stub(productsModel, 'changeProduct').resolves(0);
+
+    const responseErrorData = {
+      message: 'Product not found',
+    };
+
+    const newProduct = {
+      name: 'Modified product',
+    };
+
+    const serviceErrorResponse = await productsService.modifyProduct(
+      404,
+      newProduct,
+    );
+    expect(serviceErrorResponse.status).to.equal(httpMockMap.NOT_FOUND);
+    expect(serviceErrorResponse.data).to.deep.equal(responseErrorData);
   });
 
   afterEach(function () {
