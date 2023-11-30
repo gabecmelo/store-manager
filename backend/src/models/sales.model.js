@@ -32,7 +32,7 @@ const createNewSale = async () => {
 };
 
 const insertProductsOnSale = async (saleId, saleData) => {
-  const inserted = await Promise.all(
+  const insertedProduct = await Promise.all(
     saleData.map(async (product) => {
       const { productId, quantity } = product;
       return connection.execute(
@@ -42,7 +42,17 @@ const insertProductsOnSale = async (saleId, saleData) => {
       );
     }),
   );
-  return inserted;
+  return insertedProduct;
+};
+
+const deleteSale = async (saleId) => {
+  const [{ affectedRows }] = await connection.execute(
+    `DELETE FROM sales 
+    WHERE id = ?`,
+    [saleId],
+  );
+
+  return affectedRows;
 };
 
 module.exports = {
@@ -50,4 +60,5 @@ module.exports = {
   findById,
   createNewSale,
   insertProductsOnSale,
+  deleteSale
 };

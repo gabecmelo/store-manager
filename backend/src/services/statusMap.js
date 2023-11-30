@@ -1,0 +1,10 @@
+const httpStatusMap = {
+  SUCCESSFULL: 'SUCCESSFULL',
+  NOT_FOUND: 'NOT_FOUND',
+  CREATED: 'CREATED',
+  INVALID_VALUE: 'INVALID_VALUE',
+  UNPROCESSABLE: 'UNPROCESSABLE',
+  NO_CONTENT: 'NO_CONTENT',
+};
+
+module.exports = httpStatusMap;
