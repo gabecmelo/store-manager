@@ -27,9 +27,23 @@ const deleteSale = async (req, res) => {
   res.status(mapStatusHttp(status)).json(data);
 };
 
+const updateProductQuantity = async (req, res) => {
+  const { saleId, productId } = req.params;
+  const { quantity } = req.body;
+
+  const { status, data } = await salesService.updateProductQuantity(
+    quantity,
+    saleId,
+    productId,
+  );
+
+  res.status(mapStatusHttp(status)).json(data);
+};
+
 module.exports = {
   getAllSales,
   getSaleById,
   registerNewSale,
   deleteSale,
+  updateProductQuantity,
 };

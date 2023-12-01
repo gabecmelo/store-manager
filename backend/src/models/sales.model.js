@@ -11,15 +11,27 @@ const findAll = async () => {
   return camelize(sales);
 };
 
-const findById = async (id) => {
-  const [sale] = await connection.execute(
-    `SELECT s.date, sp.product_id, sp.quantity 
-    FROM sales_products sp
-    INNER JOIN sales s ON sp.sale_id = s.id
-    WHERE sp.sale_id = ?
-    ORDER BY sp.sale_id, product_id;`,
-    [id],
-  );
+const findById = async (id, saleWithId) => {
+  let sale;
+  if (saleWithId) {
+    [sale] = await connection.execute(
+      `SELECT s.id as sale_id, s.date, sp.product_id, sp.quantity 
+      FROM sales_products sp
+      INNER JOIN sales s ON sp.sale_id = s.id
+      WHERE sp.sale_id = ?
+      ORDER BY sp.sale_id, product_id;`,
+      [id],
+    );
+  } else {
+    [sale] = await connection.execute(
+      `SELECT s.date, sp.product_id, sp.quantity 
+      FROM sales_products sp
+      INNER JOIN sales s ON sp.sale_id = s.id
+      WHERE sp.sale_id = ?
+      ORDER BY sp.sale_id, product_id;`,
+      [id],
+    );
+  }
   return camelize(sale);
 };
 
@@ -55,10 +67,21 @@ const deleteSale = async (saleId) => {
   return affectedRows;
 };
 
+const updateProductQuantity = async (quantity, saleId, productId) => {
+  const [{ affectedRows }] = await connection.execute(
+    `UPDATE sales_products
+    SET quantity = ?
+    WHERE sale_id = ? AND product_id = ?`,
+    [quantity, saleId, productId],
+  );
+  return affectedRows;
+};
+
 module.exports = {
   findAll,
   findById,
   createNewSale,
   insertProductsOnSale,
-  deleteSale
+  deleteSale,
+  updateProductQuantity,
 };

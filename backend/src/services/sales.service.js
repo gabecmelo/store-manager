@@ -26,20 +26,15 @@ const getSale = async (id) => {
 
 const insertNewSale = async (saleData) => {
   const error = saleSchema.validateSale(saleData);
-  if (error) {
-    return { status: error.status, data: { message: error.message } };
-  }
+  if (error) return { status: error.status, data: { message: error.message } };
 
-  const productsInStorage = await productSchema.validateProductsInStorage(
-    saleData
-  );
+  const productsInStorage = await productSchema.validateProductsInStorage(saleData);
   if (!productsInStorage) {
     return {
       status: httpStatusMap.NOT_FOUND,
       data: { message: 'Product not found' },
     };
   }
-
   const insertId = await salesModel.createNewSale();
   await salesModel.insertProductsOnSale(insertId, saleData);
   return {
@@ -57,9 +52,50 @@ const deleteSale = async (saleId) => {
   };
 };
 
+const updateProductQuantity = async (quantity, saleId, productId) => {
+  const error = saleSchema.validateUpdateSale({
+    quantity,
+    saleId,
+    productId,
+  });
+
+  if (error) {
+    return { status: error.status, data: { message: error.message } };
+  }
+
+  const oldSale = await salesModel.findById(saleId);
+  if (!oldSale || oldSale.length < 1) {
+    return {
+      status: httpStatusMap.NOT_FOUND,
+      data: { message: 'Sale not found' },
+    };
+  }
+
+  const productInSale = saleSchema.verifyProductInSale(oldSale, productId);
+
+  if (!productInSale) {
+    return {
+      status: httpStatusMap.NOT_FOUND,
+      data: { message: 'Product not found in sale' },
+    };
+  }
+
+  const affectedRows = await salesModel.updateProductQuantity(
+    quantity,
+    saleId,
+    productId,
+  );
+
+  if (affectedRows > 0) {
+    const newSale = await salesModel.findById(saleId, true);
+    return { status: httpStatusMap.SUCCESSFULL, data: newSale };
+  }
+};
+
 module.exports = {
   getSales,
   getSale,
   insertNewSale,
   deleteSale,
+  updateProductQuantity,
 };

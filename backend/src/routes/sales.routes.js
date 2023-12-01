@@ -9,4 +9,6 @@ salesRoutes.post('/', salesController.registerNewSale);
 
 salesRoutes.delete('/:id', salesController.deleteSale);
 
+salesRoutes.put('/:saleId/products/:productId/quantity', salesController.updateProductQuantity);
+
 module.exports = salesRoutes;

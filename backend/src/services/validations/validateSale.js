@@ -1,4 +1,4 @@
-const { insertSaleSchema } = require('./schemas');
+const { insertSaleSchema, updateSaleSchema } = require('./schemas');
 
 const validateSale = (saleData) => {
   const { error } = insertSaleSchema.validate(saleData);
@@ -13,6 +13,27 @@ const validateSale = (saleData) => {
   }
 };
 
+const validateUpdateSale = (saleData) => {
+  const { error } = updateSaleSchema.validate(saleData);
+  if (error) {
+    return {
+      status: error.message.includes('required')
+        ? 'INVALID_VALUE'
+        : 'UNPROCESSABLE',
+      message: error.message,
+    };
+  }
+};
+
+const verifyProductInSale = (sale, productId) => {
+  const productInSale = sale.some(
+    (s) => s.productId === Number(productId),
+  );
+  return productInSale;
+};
+
 module.exports = {
   validateSale,
+  validateUpdateSale,
+  verifyProductInSale,
 };
