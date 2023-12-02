@@ -22,6 +22,8 @@ Instale as dependências: `npm install` <br>
 
 Inicie os containers com: `docker-compose up -d` *(em média 140s para a primeira vez iniciando o container e 80s para as próximas)* <br>
 
+Ouça os logs da aplicação com: `docker logs -n 10 -f store_manager`
+
 Acesse a aplicação em: `http://localhost:3001` no navegador ou no client de sua escolha *(ex: Thunder Client, Postman, Insomnia...)*
 
 ### Opção 2: Localmente
