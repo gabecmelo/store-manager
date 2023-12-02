@@ -48,16 +48,16 @@ const insertNewProduct = async (productData) => {
 
 const modifyProduct = async (productId, newProduct) => {
   const id = Number(productId);
-  
+
   const error = await schema.validateProduct(newProduct);
-  
+
   if (error) {
     return { status: error.status, data: { message: error.message } };
   }
-  
+
   const { name } = newProduct;
   const affectedRows = await productsModel.changeProduct(id, name);
-  
+
   if (affectedRows <= 0) {
     return {
       status: status.NOT_FOUND,
@@ -84,10 +84,24 @@ const deleteProduct = async (productId) => {
   return { status: status.NO_CONTENT };
 };
 
+const searchProduct = async (query) => {
+  const product = await productsModel.searchProduct(query);
+
+  if (product) {
+    return { status: status.SUCCESSFULL, data: product };
+  }
+
+  return {
+    status: status.NOT_FOUND,
+    data: { message: errorMessages.NOT_FOUND },
+  };
+};
+
 module.exports = {
   getProducts,
   getProduct,
   insertNewProduct,
   modifyProduct,
   deleteProduct,
+  searchProduct,
 };

@@ -3,6 +3,8 @@ const { productsController } = require('../controllers');
 
 productsRoutes.get('/', productsController.getAllProducts);
 
+productsRoutes.get('/search', productsController.searchProduct);
+
 productsRoutes.get('/:id', productsController.getProductById);
 
 productsRoutes.post('/', productsController.registerNewProduct);
@@ -10,7 +12,5 @@ productsRoutes.post('/', productsController.registerNewProduct);
 productsRoutes.put('/:id', productsController.modifyProduct);
 
 productsRoutes.delete('/:id', productsController.deleteProduct);
-
-// productsRoutes.get('/search', productsController.searchProduct);
 
 module.exports = productsRoutes;
