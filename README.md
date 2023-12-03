@@ -1,4 +1,4 @@
-# Store Manager - uma API RESTful para mercados e lojas 🚀
+# Store Manager - uma API RESTful para lojas e mercados! 🚀
 
 ## Desenvolvedor
 **Nome**: Gabriel Cabral Melo <br>
